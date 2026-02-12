@@ -1,13 +1,13 @@
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
+@import "tailwindcss";
 
 /* ===== Design tokens ===== */
 :root {
+  /* colors (RGB for opacity support) */
   --bg: 255 255 255;
   --text: 15 23 42;
 
-  --primary: 22 163 74;   /* green-600 */
-  --secondary: 14 165 233; /* sky-500 */
+  --primary: 22 163 74;
+  --secondary: 14 165 233;
 
   --muted: 241 245 249;
   --border: 226 232 240;
@@ -18,11 +18,23 @@
   --bg: 15 23 42;
   --text: 226 232 240;
 
-  --primary: 34 197 94;   /* green-500 */
+  --primary: 34 197 94;
   --secondary: 56 189 248;
 
   --muted: 30 41 59;
   --border: 51 65 85;
+}
+
+/* ===== Tailwind theme extension ===== */
+@theme {
+  --color-background: rgb(var(--bg));
+  --color-foreground: rgb(var(--text));
+
+  --color-primary: rgb(var(--primary));
+  --color-secondary: rgb(var(--secondary));
+
+  --color-muted: rgb(var(--muted));
+  --color-border: rgb(var(--border));
 }
 
 /* ===== Base styles ===== */
