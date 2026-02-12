@@ -13,9 +13,9 @@ export default function LayoutHeader() {
 
     return (
         <Header className="bg-(--background) border-b border-border shadow-sm">
-            <div className="w-full h-full flex items-center justify-between p-4 mx-auto max-w-400">
-                <div className="flex mr-6 items-center">
-                <Button size="large" className="mr-4" icon={<MenuOutlined />} onClick={() => setOpen(true)}  aria-label={"Open menu"} />
+            <div className="w-full h-full flex items-center justify-between p-2 md:p-4 mx-auto max-w-400">
+                <div className="flex mr-2 md:mr-6 items-center">
+                <Button size="large" className="mr-2 md:mr-4" icon={<MenuOutlined />} onClick={() => setOpen(true)}  aria-label={"Open menu"} />
                 {/* Logo */}
                 <HeaderLogo />
                 {/* Desktop nav */}
@@ -40,9 +40,11 @@ export default function LayoutHeader() {
                 >
                     <Input.Search size="large" placeholder="Шукаю..." enterButton />
                 </AutoComplete>
-                <div className="flex ml-6 items-center">
-                    <Button size="large" className="mr-4" icon={<ShoppingCartOutlined style={{fontSize: 26}} />} onClick={() => setOpen(true)}  aria-label={"Open menu"} />
-                <Avatar size="large" icon={<UserOutlined />} style={{cursor: "pointer"}} />
+                <div className="flex ml-2 md:ml-6 items-center">
+                    <Button size="large" className="mr-0 md:mr-4" icon={<ShoppingCartOutlined style={{fontSize: 26}} />} onClick={() => setOpen(true)}  aria-label={"Open menu"} />
+                <div className="hidden md:block">
+                    <Avatar  size="large" icon={<UserOutlined />} style={{cursor: "pointer"}} />
+                </div>
                 </div>
             </div>
         </Header>
