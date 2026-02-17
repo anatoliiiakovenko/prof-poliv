@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useState } from 'react';
 import {AutoComplete, Avatar, Button, Flex, Input} from "antd";
 import {MenuOutlined, ShoppingCartOutlined, UserOutlined} from "@ant-design/icons";
-import {Header} from "antd/lib/layout/layout";
 import {HeaderLogo} from "@/components/layout/header/HeaderLogo";
 
 
@@ -12,7 +11,7 @@ export default function LayoutHeader() {
     const [open, setOpen] = useState(false);
 
     return (
-        <Header className="bg-(--background) border-b border-border shadow-sm">
+        <header className="bg-(--background) border-b border-border shadow-sm">
             <div className="w-full h-full flex items-center justify-between p-2 md:p-4 mx-auto max-w-400">
                 <div className="flex mr-2 md:mr-6 items-center">
                 <Button size="large" className="mr-2 md:mr-4" icon={<MenuOutlined />} onClick={() => setOpen(true)}  aria-label={"Open menu"} />
@@ -47,6 +46,6 @@ export default function LayoutHeader() {
                 </div>
                 </div>
             </div>
-        </Header>
+        </header>
     );
 }
