@@ -1,3 +1,3 @@
 type IconProps = {
-    className?: string
-}
+  className?: string;
+};

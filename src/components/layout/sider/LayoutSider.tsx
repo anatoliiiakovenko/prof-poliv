@@ -1,14 +1,14 @@
-import { Grid } from "antd";
-import {Logo} from "@/components/icons/Logo";
+// import { Grid } from "antd";
+import { CatalogMenu } from "@/components/layout/sider/CatalogMenu";
 
-const { useBreakpoint } = Grid;
+// const { useBreakpoint } = Grid;
 
 export function LayoutSider() {
-    const screens = useBreakpoint();
+  // const screens = useBreakpoint();
 
-    return (
-        <>
-
-        </>
-    );
+  return (
+    <>
+      <CatalogMenu />
+    </>
+  );
 }
