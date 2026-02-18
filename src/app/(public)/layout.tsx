@@ -1,6 +1,7 @@
 import LayoutHeader from "@/components/layout/header/LayoutHeader";
 import React from "react";
 import { LayoutSider } from "@/components/layout/sider/LayoutSider";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 export default function PublicLayout({
   children,
@@ -11,6 +12,7 @@ export default function PublicLayout({
     <div className="min-h-screen flex flex-col">
       {/* Header */}
       <LayoutHeader />
+      <Breadcrumbs />
       {/* Body */}
       <div className="flex flex-1">
         <aside className="w-78 border-r border-border p-4">
