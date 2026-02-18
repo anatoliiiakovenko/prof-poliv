@@ -1,28 +1,16 @@
 "use client";
 
-import { Grid } from "antd";
+import type {MenuProps} from "antd";
+import {Grid, Menu} from "antd";
+import React from "react";
+import {useRouter} from "next/navigation";
+import {catalogMenu} from "@/components/static/catalog-menu";
 
 const { useBreakpoint } = Grid;
-
-import React, { useState } from "react";
-import {
-  AppstoreOutlined,
-  ContainerOutlined,
-  DesktopOutlined,
-  MailOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  PieChartOutlined,
-} from "@ant-design/icons";
-import type { MenuProps } from "antd";
-import { Button, Menu } from "antd";
-import { useRouter } from "next/navigation";
-import { catalogMenu } from "@/components/static/catalog-menu";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
 export function CatalogMenu() {
-  const [collapsed, setCollapsed] = useState(false);
   const router = useRouter();
 
   const items: MenuItem[] = catalogMenu.map((item) => {
@@ -32,59 +20,13 @@ export function CatalogMenu() {
     };
   });
 
-  // const items: MenuItem[] = [
-  //     { key: '1', icon: <PieChartOutlined />, label: 'Крапельна трубка', onClick: () => { router.push('/krapelna-trubka') } },
-  //     { key: '2', icon: <DesktopOutlined />, label: 'Крапельна стрічка',onClick: () => { router.push('/krapelna-strichka') } },
-  //     { key: '3', icon: <ContainerOutlined />, label: 'Option 3' },
-  //     {
-  //         key: 'sub1',
-  //         label: 'Navigation One',
-  //         icon: <MailOutlined />,
-  //         children: [
-  //             { key: '5', label: 'Option 5' },
-  //             { key: '6', label: 'Option 6' },
-  //             { key: '7', label: 'Option 7' },
-  //             { key: '8', label: 'Option 8' },
-  //         ],
-  //     },
-  //     {
-  //         key: 'sub2',
-  //         label: 'Navigation Two',
-  //         icon: <AppstoreOutlined />,
-  //         children: [
-  //             { key: '9', label: 'Option 9' },
-  //             { key: '10', label: 'Option 10' },
-  //             {
-  //                 key: 'sub3',
-  //                 label: 'Submenu',
-  //                 children: [
-  //                     { key: '11', label: 'Option 11' },
-  //                     { key: '12', label: 'Option 12' },
-  //                 ],
-  //             },
-  //         ],
-  //     },
-  // ];
-
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
-
   return (
     <div style={{ width: "100%" }}>
-      <Button
-        type="primary"
-        onClick={toggleCollapsed}
-        style={{ marginBottom: 16 }}
-      >
-        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-      </Button>
       <Menu
         defaultSelectedKeys={["1"]}
         defaultOpenKeys={["sub1"]}
         mode="inline"
         theme="light"
-        inlineCollapsed={collapsed}
         items={items}
         style={{ border: "none" }}
         onClick={(e) => {
