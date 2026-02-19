@@ -1,14 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { AutoComplete, Avatar, Button, Flex, Input } from "antd";
-import {
-  MenuOutlined,
-  ShoppingCartOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { HeaderLogo } from "@/components/layout/header/HeaderLogo";
+import {useState} from "react";
+import {AutoComplete, Avatar, Button, Input} from "antd";
+import {MenuOutlined, UserOutlined,} from "@ant-design/icons";
+import {HeaderLogo} from "@/components/layout/header/HeaderLogo";
+import {UserCart} from "@/features/cart/UserCart";
 
 export default function LayoutHeader() {
   const [open, setOpen] = useState(false);
@@ -52,13 +49,7 @@ export default function LayoutHeader() {
           <Input.Search size="large" placeholder="Шукаю..." enterButton />
         </AutoComplete>
         <div className="flex ml-2 md:ml-6 items-center">
-          <Button
-            size="large"
-            className="mr-0 md:mr-4"
-            icon={<ShoppingCartOutlined style={{ fontSize: 26 }} />}
-            onClick={() => setOpen(true)}
-            aria-label={"Open menu"}
-          />
+          <UserCart/>
           <div className="hidden md:block">
             <Avatar
               size="large"

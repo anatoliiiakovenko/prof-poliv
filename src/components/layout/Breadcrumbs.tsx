@@ -1,10 +1,10 @@
 "use client";
 
-import { Breadcrumb } from "antd";
-import { HomeOutlined } from "@ant-design/icons";
-import { usePathname } from "next/navigation";
+import {Breadcrumb} from "antd";
+import {HomeOutlined} from "@ant-design/icons";
+import {usePathname} from "next/navigation";
 import Link from "next/link";
-import { catalogMenu } from "@/components/static/catalog-menu";
+import {catalogMenu} from "@/static/catalog-menu";
 
 export function Breadcrumbs() {
   const pathname = usePathname();
