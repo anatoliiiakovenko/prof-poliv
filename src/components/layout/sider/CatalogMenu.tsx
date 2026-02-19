@@ -4,7 +4,7 @@ import type {MenuProps} from "antd";
 import {Grid, Menu} from "antd";
 import React from "react";
 import {useRouter} from "next/navigation";
-import {catalogMenu} from "@/components/static/catalog-menu";
+import {catalogMenu} from "@/static/catalog-menu";
 
 const { useBreakpoint } = Grid;
 
