@@ -1,10 +1,10 @@
 "use client";
 
-import type {MenuProps} from "antd";
-import {Grid, Menu} from "antd";
+import type { MenuProps } from "antd";
+import { Grid, Menu } from "antd";
 import React from "react";
-import {useRouter} from "next/navigation";
-import {catalogMenu} from "@/static/catalog-menu";
+import { useRouter } from "next/navigation";
+import { catalogMenu } from "@/static/catalog-menu";
 
 const { useBreakpoint } = Grid;
 

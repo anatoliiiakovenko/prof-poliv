@@ -1,6 +1,6 @@
 "use client";
 
-import {ConfigProvider, theme} from "antd";
+import { ConfigProvider, theme } from "antd";
 import React from "react";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
@@ -12,12 +12,12 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         token: {
           colorPrimary: "#2ecc71",
         },
-          components: {
-              Typography: {
-                  titleMarginBottom: 0,
-                  titleMarginTop: 0,
-              },
+        components: {
+          Typography: {
+            titleMarginBottom: 0,
+            titleMarginTop: 0,
           },
+        },
       }}
     >
       {children}

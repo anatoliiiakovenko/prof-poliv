@@ -1,1 +1,1 @@
-export {Modal} from "@/components/ui/CustomModal";
+export { Modal } from "@/components/ui/CustomModal";
