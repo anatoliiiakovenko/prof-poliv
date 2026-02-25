@@ -3,22 +3,27 @@ import React from "react";
 import { LayoutSider } from "@/components/layout/sider/LayoutSider";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
-export default function PublicLayout({
-  children,
-}: {
+interface MainLayoutProps {
+  withSider?: boolean;
   children: React.ReactNode;
-}) {
+}
+
+export default function MainLayout({
+  children,
+  withSider = true,
+}: MainLayoutProps) {
   return (
-    <div className="min-h-screen flex flex-col pt-[72px]">
+    <div className="min-h-screen flex flex-col pt-18">
       {/* Header */}
       <LayoutHeader />
       <Breadcrumbs />
       {/* Body */}
       <div className="flex flex-1">
-        <aside className="w-78 border-r border-border p-4">
-          <LayoutSider />
-        </aside>
-
+        {withSider && (
+          <aside className="w-78 border-r border-border p-4">
+            <LayoutSider />
+          </aside>
+        )}
         <main className="flex-1 mx-auto min-w-0 overflow-hidden max-w-7xl p-6">
           {children}
         </main>

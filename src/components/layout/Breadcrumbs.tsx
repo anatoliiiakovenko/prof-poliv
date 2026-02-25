@@ -9,7 +9,9 @@ import { catalogMenu } from "@/static/catalog-menu";
 export function Breadcrumbs() {
   const pathname = usePathname();
 
-  const current = catalogMenu.find((item) => item.key === pathname);
+  const current = catalogMenu.find(
+    (item) => pathname === item.key || pathname.startsWith(`${item.key}/`),
+  );
 
   if (!current) return null;
 

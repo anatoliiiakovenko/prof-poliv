@@ -1,8 +1,9 @@
+import PageLayout from "@/components/layout/PageLayout";
+
 export default function ShlangyLayflatPage() {
   return (
-    <>
-      <h1 className="text-2xl font-bold">Шланги Layflat</h1>
+    <PageLayout title={"Шланги Layflat"}>
       <p className="mt-2 text-gray-600">Контент</p>
-    </>
+    </PageLayout>
   );
 }

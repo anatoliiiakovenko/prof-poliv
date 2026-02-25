@@ -2,10 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {Product} from "@/types/product.type";
-import {ShoppingCartOutlined} from "@ant-design/icons";
+import { Product } from "@/types/product.type";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 import clsx from "clsx";
-import {Button, Tooltip} from "antd";
+import { Button, Typography } from "antd";
+import { CustomTextLink } from "@/components/ui/CustomLink";
+
+const { Paragraph } = Typography;
 
 interface ProductCardProps {
   product: Product;
@@ -38,33 +41,42 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
           />
         </div>
 
-          <Tooltip title={title} placement="top">
-              <h3 className="mt-3 text-sm font-medium line-clamp-2">
-                  <Link
-                      href={`/krapelna-strichka/${id}`}
-                      className="
-        hover:text-green-600
-        transition-colors
-        cursor-pointer
-      "
-                  >
-                      {title}
-                  </Link>
-              </h3>
-          </Tooltip>
+        <CustomTextLink title={title} href={`/krapelna-strichka/${id}`} />
+
+        {/*  <div className="group">*/}
+        {/*    <Typography.Paragraph*/}
+        {/*        ellipsis={{ rows: 2, tooltip: title }}*/}
+        {/*        className="mb-0!"*/}
+        {/*    >*/}
+        {/*      <Link*/}
+        {/*          href={`/krapelna-strichka/${id}`}*/}
+        {/*          className="*/}
+        {/*  text-sm*/}
+        {/*  font-medium*/}
+        {/*  transition-colors*/}
+        {/*  group-hover:text-green-600*/}
+        {/*  hover:underline*/}
+        {/*"*/}
+        {/*      >*/}
+        {/*        {title}*/}
+        {/*      </Link>*/}
+        {/*    </Typography.Paragraph>*/}
+        {/*  </div>*/}
 
         <div className="mt-2 flex justify-between items-center">
           <p className="text-lg font-semibold">{price} ₴</p>
           <Button
-              size="middle"
-              type="text"
-              shape="circle"
-              className="group"
-              icon={
-                <span className="inline-flex transition-transform duration-200 group-hover:scale-110">
-      <ShoppingCartOutlined style={{ color: "#2ecc71", fontSize: 20 }} />
-    </span>
-              }
+            size="middle"
+            type="text"
+            shape="circle"
+            className="group"
+            icon={
+              <span className="inline-flex transition-transform duration-200 group-hover:scale-110">
+                <ShoppingCartOutlined
+                  style={{ color: "#2ecc71", fontSize: 20 }}
+                />
+              </span>
+            }
           />
         </div>
 
