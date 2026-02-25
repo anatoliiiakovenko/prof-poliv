@@ -1,0 +1,13 @@
+/*CustomLink styles */
+.link-wrapper {
+  .custom-link-text {
+    color: #0f172a;
+
+    &:hover {
+      color: #2ecc71;
+      text-decoration: underline;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+  }
+}
