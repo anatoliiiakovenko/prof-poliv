@@ -1,10 +1,10 @@
 "use client";
 
-import type { MenuProps } from "antd";
-import { Grid, Menu } from "antd";
+import {Grid, Menu, MenuProps} from "antd";
 import React from "react";
-import { useRouter } from "next/navigation";
-import { catalogMenu } from "@/static/catalog-menu";
+import {useRouter} from "next/navigation";
+import {catalogMenu} from "@/static/catalog-menu";
+import {SiderTitle} from "@/components/layout/sider/SiderTitle";
 
 const { useBreakpoint } = Grid;
 
@@ -22,6 +22,7 @@ export function CatalogMenu() {
 
   return (
     <div style={{ width: "100%" }}>
+        <SiderTitle title="Каталог"/>
       <Menu
         defaultSelectedKeys={["1"]}
         defaultOpenKeys={["sub1"]}
