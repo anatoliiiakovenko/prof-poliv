@@ -20,7 +20,7 @@ export default function MainLayout({
       {/* Body */}
       <div className="flex flex-1">
         {withSider && (
-          <aside className="w-78 border-r border-border p-4">
+          <aside className="hidden md:block w-78 border-r border-border p-4">
             <LayoutSider />
           </aside>
         )}
@@ -30,7 +30,7 @@ export default function MainLayout({
       </div>
       {/* Footer */}
       <footer className="border-t border-border py-4 text-center text-sm">
-        © {new Date().getFullYear()} ПрофПолив. Всі права захищені.
+        &copy; {new Date().getFullYear()} ПрофПолив. Всі права захищені.
       </footer>
     </div>
   );

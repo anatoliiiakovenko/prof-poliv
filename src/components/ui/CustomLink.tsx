@@ -1,4 +1,4 @@
-import { Typography } from "antd";
+import {Typography} from "antd";
 import Link from "next/link";
 import "./index.css";
 
@@ -6,13 +6,11 @@ const { Paragraph } = Typography;
 interface CustomLinkProps {
   title: string;
   href: string;
-  customClassName?: string;
 }
 
 export const CustomTextLink = ({
   title,
   href,
-  customClassName = "",
 }: CustomLinkProps) => {
   return (
     <div className={"link-wrapper"}>
