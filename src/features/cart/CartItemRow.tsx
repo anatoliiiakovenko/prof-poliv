@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Button, InputNumber } from "antd";
+import { Button, InputNumber, Grid } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import type { CartItem } from "@/features/cart/CartContext";
 
@@ -16,9 +16,13 @@ export function CartItemRow({
   onRemove,
   onQuantityChange,
 }: CartItemRowProps) {
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
   const image = item.image ? item.image : "/images/no-image.webp";
+  const isMobile = !screens.sm;
+
   return (
-    <div className="flex items-center gap-3 py-3 border-b border-border last:border-b-0">
+    <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mb-2 p-3 border border-border rounded-lg last:mb-0">
       <div className="w-16 h-16 flex items-center justify-center shrink-0">
         <Image
           src={image}
@@ -28,27 +32,30 @@ export function CartItemRow({
           className="object-contain"
         />
       </div>
-      <div className="flex-1 min-w-0">
+      <div className="flex-1 min-w-0 w-full text-center sm:text-left">
         <p className="text-sm font-medium truncate">{item.title}</p>
         <p className="text-sm text-gray-500">{item.price} ₴</p>
       </div>
-      <InputNumber
-        min={1}
-        value={item.quantity}
-        onChange={(value) => {
-          if (typeof value === "number" && value >= 1) {
-            onQuantityChange(item.id, value);
-          }
-        }}
-        style={{ width: 64 }}
-      />
-      <Button
-        type="text"
-        danger
-        icon={<DeleteOutlined />}
-        onClick={() => onRemove(item.id)}
-        aria-label="Remove from cart"
-      />
+      <div className="flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-end">
+        <InputNumber
+          min={1}
+          mode={'spinner' as const}
+          value={item.quantity}
+          onChange={(value) => {
+            if (typeof value === "number" && value >= 1) {
+              onQuantityChange(item.id, value);
+            }
+          }}
+          style={{ width: isMobile ? "100%" : "130px" }}
+        />
+        <Button
+          type="text"
+          danger
+          icon={<DeleteOutlined style={{ fontSize: 16 }} />}
+          onClick={() => onRemove(item.id)}
+          aria-label="Remove from cart"
+        />
+      </div>
     </div>
   );
 }

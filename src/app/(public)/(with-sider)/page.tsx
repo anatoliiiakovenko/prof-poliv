@@ -4,7 +4,7 @@ export default function HomePage() {
   return (
     <>
       <ActionSlider />
-      <h1 className="text-2xl font-bold">Prof Poliv</h1>
+      <h1 className="text-2xl font-bold">Профполив</h1>
       <p className="mt-2 text-gray-600">
         Інтернет-магазин обладнання для поливу
       </p>

@@ -7,6 +7,7 @@ import { EmptyCart } from "@/components/shared/EmptyCart";
 import { UserCartModalTitle } from "@/features/cart/UserCartModalTitle";
 import { useCart } from "@/features/cart/CartContext";
 import { CartItemRow } from "@/features/cart/CartItemRow";
+import { CartFooter } from "@/features/cart/CartFooter";
 
 export function UserCart() {
   const {
@@ -17,14 +18,13 @@ export function UserCart() {
     removeItem,
     setQuantity,
     totalCount,
-    totalPrice,
   } = useCart();
 
   const isEmpty = items.length === 0;
 
   return (
     <>
-      <Badge count={totalCount} size="small" offset={[-6, 6]}>
+      <Badge count={totalCount} size="small" offset={[-14, 2]}>
         <Button
           size="large"
           className="mr-0 md:mr-4"
@@ -37,18 +37,8 @@ export function UserCart() {
       <Modal
         open={isOpen}
         onCancel={closeCart}
-        footer={
-          isEmpty ? null : (
-            <div className="flex items-center justify-between w-full">
-              <span className="text-base font-semibold">
-                Разом: {totalPrice} ₴
-              </span>
-              <Button type="primary" size="large">
-                Оформити замовлення
-              </Button>
-            </div>
-          )
-        }
+        width={800}
+        footer={isEmpty ? null : <CartFooter />}
         title={<UserCartModalTitle />}
       >
         {isEmpty ? (

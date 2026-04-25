@@ -6,6 +6,7 @@ import { AutoComplete, Avatar, Button, Input } from "antd";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import { HeaderLogo } from "@/components/layout/header/HeaderLogo";
 import { UserCart } from "@/features/cart/UserCart";
+import AutocompleteSearchInput from "@/features/AutocompleteSearchInput";
 
 export default function LayoutHeader() {
   const [open, setOpen] = useState(false);
@@ -39,15 +40,7 @@ export default function LayoutHeader() {
             </Link>
           </nav>
         </div>
-        <AutoComplete
-          popupMatchSelectWidth={252}
-          style={{ width: "100%" }}
-          // options={options}
-          // onSelect={onSelect}
-          // showSearch={{ onSearch: handleSearch }}
-        >
-          <Input.Search size="large" placeholder="Шукаю..." enterButton />
-        </AutoComplete>
+     <AutocompleteSearchInput/>
         <div className="flex ml-2 md:ml-6 items-center">
           <UserCart />
           <div className="hidden md:block">
