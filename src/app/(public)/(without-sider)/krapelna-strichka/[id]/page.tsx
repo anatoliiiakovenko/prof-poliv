@@ -1,6 +1,12 @@
+"use client";
+
+import React from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { mockedProducts } from "@/static/mocked-products";
+import { Button } from "antd";
+import { useCart } from "@/features/cart/CartContext";
+import { CheckOutlined } from "@ant-design/icons";
 
 interface ProductPageProps {
   params: Promise<{
@@ -8,14 +14,22 @@ interface ProductPageProps {
   }>;
 }
 
-export default async function ProductPage({ params }: ProductPageProps) {
-  const { id } = await params;
+export default function ProductPage({ params }: ProductPageProps) {
+  const { id } = React.use(params);
+  const { addItem, openCart, isInCart } = useCart();
 
   const product = mockedProducts.find((p) => p.id === id);
 
   if (!product) {
     notFound();
   }
+
+  const inCart = isInCart(id);
+
+  const handleAddToCart = () => {
+    addItem(product);
+    openCart();
+  };
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-6">
@@ -47,12 +61,21 @@ export default async function ProductPage({ params }: ProductPageProps) {
             {product.inStock ? "В наявності" : "Немає в наявності"}
           </p>
 
-          <button
-            className="mt-6 px-6 py-3 rounded-lg bg-green-600 text-white hover:bg-green-700 transition"
+          <Button
+            type={"primary"}
+            size={"large"}
             disabled={!product.inStock}
+            onClick={handleAddToCart}
+            className="mt-6"
           >
-            Додати в кошик
-          </button>
+            {inCart ? (
+              <>
+                <CheckOutlined /> В кошику
+              </>
+            ) : (
+              "Додати в кошик"
+            )}
+          </Button>
 
           <div className="mt-6 text-sm text-gray-600">
             <p>

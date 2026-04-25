@@ -38,7 +38,7 @@ export function SiderContacts() {
                         <EnvironmentOutlined /> Адреса
                     </Text>
                     <Text>
-                        вул. Хрещатик, 1<br />
+                        вул. Велика Кільцева, 4в<br />
                         Київ, 01001<br />
                         Україна
                     </Text>
@@ -54,7 +54,7 @@ export function SiderContacts() {
                     <Space orientation="vertical" size="small">
                         <div>
                             <MailOutlined style={{ marginRight: '8px' }} />
-                            <Link href="mailto:info@example.com">info@example.com</Link>
+                            <Link href="mailto:info@example.com">office@profpoliv.in.ua</Link>
                         </div>
                         <div>
                             <ClockCircleOutlined style={{ marginRight: '8px' }} />
@@ -62,46 +62,9 @@ export function SiderContacts() {
                         </div>
                         <div>
                             <GlobalOutlined style={{ marginRight: '8px' }} />
-                            <Link href="https://example.com" target="_blank">example.com</Link>
+                            <Link href="https://profpoliv.in.ua" target="_blank">www.profpoliv.in.ua</Link>
                         </div>
                     </Space>
-                </div>
-
-                <Divider style={{ margin: '12px 0' }} />
-
-                {/* Map */}
-                <div>
-                    <Text strong style={{ display: 'block', marginBottom: '8px' }}>
-                        <EnvironmentOutlined /> Мапа
-                    </Text>
-                    <div 
-                        onClick={handleMapClick}
-                        style={{
-                            width: '100%',
-                            height: '200px',
-                            backgroundColor: '#f5f5f5',
-                            border: '1px solid #d9d9d9',
-                            borderRadius: '6px',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundImage: 'url("https://maps.googleapis.com/maps/api/staticmap?center=Kyiv,Ukraine&zoom=15&size=400x200&markers=color:red%7CKyiv,Ukraine")',
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            position: 'relative'
-                        }}
-                    >
-                        <div style={{
-                            backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                            color: 'white',
-                            padding: '8px 16px',
-                            borderRadius: '4px',
-                            fontSize: '14px'
-                        }}>
-                            Натисніть щоб відкрити мапу
-                        </div>
-                    </div>
                 </div>
             </Space>
         </>

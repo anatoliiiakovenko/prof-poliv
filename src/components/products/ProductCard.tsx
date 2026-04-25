@@ -57,26 +57,6 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
 
         <CustomTextLink title={title} href={`/krapelna-strichka/${id}`} />
 
-        {/*  <div className="group">*/}
-        {/*    <Typography.Paragraph*/}
-        {/*        ellipsis={{ rows: 2, tooltip: title }}*/}
-        {/*        className="mb-0!"*/}
-        {/*    >*/}
-        {/*      <Link*/}
-        {/*          href={`/krapelna-strichka/${id}`}*/}
-        {/*          className="*/}
-        {/*  text-sm*/}
-        {/*  font-medium*/}
-        {/*  transition-colors*/}
-        {/*  group-hover:text-green-600*/}
-        {/*  hover:underline*/}
-        {/*"*/}
-        {/*      >*/}
-        {/*        {title}*/}
-        {/*      </Link>*/}
-        {/*    </Typography.Paragraph>*/}
-        {/*  </div>*/}
-
         <div className="mt-2 flex justify-between items-center">
           <p className="text-lg font-semibold">{price} ₴</p>
           <Button
