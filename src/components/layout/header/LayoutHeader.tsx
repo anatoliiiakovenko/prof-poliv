@@ -2,13 +2,20 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { AutoComplete, Avatar, Button, Input } from "antd";
-import { MenuOutlined, UserOutlined } from "@ant-design/icons";
+import { usePathname } from "next/navigation";
+import { Avatar, Button, Drawer } from "antd";
+import {AppstoreOutlined, MenuOutlined, UserOutlined, ShoppingCartOutlined} from "@ant-design/icons";
 import { HeaderLogo } from "@/components/layout/header/HeaderLogo";
+import { CatalogModal } from "@/components/layout/header/CatalogModal";
 import { UserCart } from "@/features/cart/UserCart";
+import AutocompleteSearchInput from "@/features/AutocompleteSearchInput";
 
 export default function LayoutHeader() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [catalogOpen, setCatalogOpen] = useState(false);
+
+  const isActive = (path: string) => pathname === path;
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border shadow-sm">
@@ -25,29 +32,31 @@ export default function LayoutHeader() {
           <HeaderLogo />
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-6">
-            <Link href="/catalog" className="hover:text-green-600">
+            <Button 
+              icon={<AppstoreOutlined />} 
+              size="large" 
+              iconPlacement={"start"}
+              onClick={() => setCatalogOpen(true)}
+            >
               Каталог
-            </Link>
+            </Button>
             <Link
               href="/about"
-              className="hover:text-green-600 whitespace-nowrap"
+              className={`hover:text-green-600 whitespace-nowrap ${isActive("/about") ? "text-primary border-b-2 border-primary" : ""}`}
+              style={isActive("/about") ? { paddingBottom: "2px" } : undefined}
             >
               Про нас
             </Link>
-            <Link href="/contacts" className="hover:text-green-600">
+            <Link
+              href="/contacts"
+              className={`hover:text-green-600 ${isActive("/contacts") ? "text-primary border-b-2 border-primary" : ""}`}
+              style={isActive("/contacts") ? { paddingBottom: "2px" } : undefined}
+            >
               Контакти
             </Link>
           </nav>
         </div>
-        <AutoComplete
-          popupMatchSelectWidth={252}
-          style={{ width: "100%" }}
-          // options={options}
-          // onSelect={onSelect}
-          // showSearch={{ onSearch: handleSearch }}
-        >
-          <Input.Search size="large" placeholder="Шукаю..." enterButton />
-        </AutoComplete>
+     <AutocompleteSearchInput/>
         <div className="flex ml-2 md:ml-6 items-center">
           <UserCart />
           <div className="hidden md:block">
@@ -59,6 +68,58 @@ export default function LayoutHeader() {
           </div>
         </div>
       </div>
+      <CatalogModal open={catalogOpen} onClose={() => setCatalogOpen(false)} />
+      
+      {/* Mobile Drawer */}
+      <Drawer
+        title="Меню"
+        placement="left"
+        onClose={() => setOpen(false)}
+        open={open}
+        size={320}
+      >
+        <div className="flex flex-col gap-4">
+          <Button 
+            icon={<AppstoreOutlined />} 
+            size="large" 
+            iconPlacement="start"
+            onClick={() => {
+              setCatalogOpen(true);
+              setOpen(false);
+            }}
+          >
+            Каталог
+          </Button>
+          
+          <Button
+            icon={<ShoppingCartOutlined />}
+            size="large"
+            iconPlacement="start"
+            onClick={() => {
+              // Trigger cart open - need to expose this from UserCart
+              const cartButton = document.querySelector('[aria-label="Shopping cart button"]') as HTMLButtonElement;
+              cartButton?.click();
+              setOpen(false);
+            }}
+          >
+            Корзина
+          </Button>
+          
+          <Link
+            href="/contacts"
+            onClick={() => setOpen(false)}
+            className="block"
+          >
+            <Button
+              size="large"
+              iconPlacement="start"
+              block
+            >
+              Контакти
+            </Button>
+          </Link>
+        </div>
+      </Drawer>
     </header>
   );
 }

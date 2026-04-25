@@ -6,7 +6,7 @@ import type { MouseEvent } from "react";
 import { Product } from "@/types/product.type";
 import { CheckOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import clsx from "clsx";
-import { Button, Typography } from "antd";
+import { Button } from "antd";
 import { CustomTextLink } from "@/components/ui/CustomLink";
 import { useCart } from "@/features/cart/CartContext";
 
@@ -57,26 +57,6 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
 
         <CustomTextLink title={title} href={`/krapelna-strichka/${id}`} />
 
-        {/*  <div className="group">*/}
-        {/*    <Typography.Paragraph*/}
-        {/*        ellipsis={{ rows: 2, tooltip: title }}*/}
-        {/*        className="mb-0!"*/}
-        {/*    >*/}
-        {/*      <Link*/}
-        {/*          href={`/krapelna-strichka/${id}`}*/}
-        {/*          className="*/}
-        {/*  text-sm*/}
-        {/*  font-medium*/}
-        {/*  transition-colors*/}
-        {/*  group-hover:text-green-600*/}
-        {/*  hover:underline*/}
-        {/*"*/}
-        {/*      >*/}
-        {/*        {title}*/}
-        {/*      </Link>*/}
-        {/*    </Typography.Paragraph>*/}
-        {/*  </div>*/}
-
         <div className="mt-2 flex justify-between items-center">
           <p className="text-lg font-semibold">{price} ₴</p>
           <Button
@@ -87,7 +67,7 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
             onClick={handleCartClick}
             aria-label={inCart ? "Відкрити кошик" : "Додати в кошик"}
             icon={
-              <span className="inline-flex transition-transform duration-200 group-hover:scale-110">
+              <span className="inline-flex justify-between items-center transition-transform duration-200">
                 <ShoppingCartOutlined
                   style={{
                     color: inCart ? "#ffffff" : "#2ecc71",
@@ -98,10 +78,11 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
                   <CheckOutlined
                     style={{
                       position: "absolute",
-                      top: 2,
-                      right: 2,
+                      right: -4,
+                      top: -4,
                       color: "#2ecc71",
                       background: "#ffffff",
+                      border: "1px solid #2ecc71",
                       borderRadius: "50%",
                       fontSize: 10,
                       padding: 1,

@@ -24,7 +24,7 @@ export default function MainLayout({
             <LayoutSider />
           </aside>
         )}
-        <main className="flex-1 mx-auto min-w-0 overflow-hidden max-w-7xl p-6">
+        <main className="relative flex-1 mx-auto min-w-0 overflow-hidden max-w-7xl p-6">
           {children}
         </main>
       </div>
