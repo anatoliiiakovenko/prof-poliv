@@ -65,6 +65,7 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
             shape="circle"
             className="group relative"
             onClick={handleCartClick}
+            disabled={!inStock}
             aria-label={inCart ? "Відкрити кошик" : "Додати в кошик"}
             icon={
               <span className="inline-flex justify-between items-center transition-transform duration-200">
@@ -80,9 +81,9 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
                       position: "absolute",
                       right: -4,
                       top: -4,
-                      color: "#2ecc71",
+                      color: (inStock ? "#2ecc71" : "gray"),
                       background: "#ffffff",
-                      border: "1px solid #2ecc71",
+                      border: `1px solid ${inStock ? "#2ecc71" : "gray"}`,
                       borderRadius: "50%",
                       fontSize: 10,
                       padding: 1,

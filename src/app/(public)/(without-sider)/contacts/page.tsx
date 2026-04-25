@@ -27,7 +27,7 @@ export default function ContactsPage() {
           </h2>
           <div className="space-y-2">
             <a href="tel:+380441234567" className="block text-blue-600 hover:underline">
-              +38 (044) 123-45-67
+              +38 (044) 123-45-55
             </a>
             <a href="tel:+380671234567" className="block text-blue-600 hover:underline">
               +38 (067) 123-45-67
