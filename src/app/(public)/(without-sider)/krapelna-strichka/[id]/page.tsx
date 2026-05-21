@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { mockedProducts } from "@/static/mocked-products";
 import { Button } from "antd";
-import { useCart } from "@/features/cart/CartContext";
+import { useCartActions, useIsInCart } from "@/features/cart/CartContext";
 import { CheckOutlined } from "@ant-design/icons";
 
 interface ProductPageProps {
@@ -16,15 +16,14 @@ interface ProductPageProps {
 
 export default function ProductPage({ params }: ProductPageProps) {
   const { id } = React.use(params);
-  const { addItem, openCart, isInCart } = useCart();
+  const { addItem, openCart } = useCartActions();
+  const inCart = useIsInCart(id);
 
   const product = mockedProducts.find((p) => p.id === id);
 
   if (!product) {
     notFound();
   }
-
-  const inCart = isInCart(id);
 
   const handleAddToCart = () => {
     addItem(product);

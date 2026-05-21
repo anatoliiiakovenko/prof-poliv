@@ -1,14 +1,8 @@
 "use client";
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type PropsWithChildren,
-} from "react";
+import { useEffect } from "react";
+import { create } from "zustand";
+import { useShallow } from "zustand/shallow";
 import type { Product } from "@/types/product.type";
 
 export interface CartItem extends Product {
@@ -37,124 +31,127 @@ function readCartFromStorage(): CartItem[] {
   }
 }
 
-interface CartContextValue {
+function persistItems(items: CartItem[]) {
+  try {
+    window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+  } catch {
+    /* ignore quota / serialization errors */
+  }
+}
+
+interface CartState {
   items: CartItem[];
   isOpen: boolean;
+  hydrated: boolean;
+
   openCart: () => void;
   closeCart: () => void;
   addItem: (product: Product) => void;
   removeItem: (id: string) => void;
   setQuantity: (id: string, quantity: number) => void;
   clear: () => void;
-  isInCart: (id: string) => boolean;
-  totalCount: number;
-  totalPrice: number;
+  hydrate: () => void;
 }
 
-const CartContext = createContext<CartContextValue | null>(null);
+export const useCartStore = create<CartState>((set, get) => ({
+  items: [],
+  isOpen: false,
+  hydrated: false,
 
-export function CartProvider({ children }: PropsWithChildren) {
-  const [items, setItems] = useState<CartItem[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [hydrated, setHydrated] = useState(false);
+  openCart: () => set({ isOpen: true }),
+  closeCart: () => set({ isOpen: false }),
 
-  useEffect(() => {
-    setItems(readCartFromStorage());
-    setHydrated(true);
-  }, []);
-
-  useEffect(() => {
-    if (!hydrated) return;
-    try {
-      window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
-    } catch {
-      /* ignore quota / serialization errors */
-    }
-  }, [items, hydrated]);
-
-  useEffect(() => {
-    const handleStorage = (event: StorageEvent) => {
-      if (event.key !== CART_STORAGE_KEY) return;
-      setItems(readCartFromStorage());
-    };
-    window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
-  }, []);
-
-  const openCart = useCallback(() => setIsOpen(true), []);
-  const closeCart = useCallback(() => setIsOpen(false), []);
-
-  const addItem = useCallback((product: Product) => {
-    setItems((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
-      if (existing) {
-        return prev.map((item) =>
+  addItem: (product) => {
+    const { items } = get();
+    const existing = items.find((item) => item.id === product.id);
+    const next = existing
+      ? items.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item,
-        );
-      }
-      return [...prev, { ...product, quantity: 1 }];
-    });
-  }, []);
+        )
+      : [...items, { ...product, quantity: 1 }];
+    set({ items: next });
+    persistItems(next);
+  },
 
-  const removeItem = useCallback((id: string) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
-  }, []);
+  removeItem: (id) => {
+    const next = get().items.filter((item) => item.id !== id);
+    set({ items: next });
+    persistItems(next);
+  },
 
-  const setQuantity = useCallback((id: string, quantity: number) => {
-    setItems((prev) =>
-      prev
-        .map((item) => (item.id === id ? { ...item, quantity } : item))
-        .filter((item) => item.quantity > 0),
-    );
-  }, []);
+  setQuantity: (id, quantity) => {
+    const next = get()
+      .items.map((item) => (item.id === id ? { ...item, quantity } : item))
+      .filter((item) => item.quantity > 0);
+    set({ items: next });
+    persistItems(next);
+  },
 
-  const clear = useCallback(() => setItems([]), []);
+  clear: () => {
+    set({ items: [] });
+    persistItems([]);
+  },
 
-  const isInCart = useCallback(
-    (id: string) => items.some((item) => item.id === id),
-    [items],
+  hydrate: () => {
+    if (get().hydrated) return;
+    set({ items: readCartFromStorage(), hydrated: true });
+  },
+}));
+
+// ── Granular selector hooks ──────────────────────────────────────────
+
+/** Stable actions that never cause re-renders. */
+export function useCartActions() {
+  return useCartStore(
+    useShallow((s) => ({
+      addItem: s.addItem,
+      removeItem: s.removeItem,
+      setQuantity: s.setQuantity,
+      openCart: s.openCart,
+      closeCart: s.closeCart,
+      clear: s.clear,
+    })),
   );
-
-  const value = useMemo<CartContextValue>(() => {
-    const totalCount = items.reduce((sum, item) => sum + item.quantity, 0);
-    const totalPrice = items.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0,
-    );
-    return {
-      items,
-      isOpen,
-      openCart,
-      closeCart,
-      addItem,
-      removeItem,
-      setQuantity,
-      clear,
-      isInCart,
-      totalCount,
-      totalPrice,
-    };
-  }, [
-    items,
-    isOpen,
-    openCart,
-    closeCart,
-    addItem,
-    removeItem,
-    setQuantity,
-    clear,
-    isInCart,
-  ]);
-
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
+/** Re-renders only when the in-cart status for this specific id changes. */
+export function useIsInCart(id: string) {
+  return useCartStore((s) => s.items.some((item) => item.id === id));
+}
+
+/** Full useCart hook — backwards-compatible drop-in replacement. */
 export function useCart() {
-  const ctx = useContext(CartContext);
-  if (!ctx) {
-    throw new Error("useCart must be used within a CartProvider");
-  }
-  return ctx;
+  const items = useCartStore((s) => s.items);
+  const isOpen = useCartStore((s) => s.isOpen);
+  const actions = useCartActions();
+  const totalCount = useCartStore((s) =>
+    s.items.reduce((sum, item) => sum + item.quantity, 0),
+  );
+  const totalPrice = useCartStore((s) =>
+    s.items.reduce((sum, item) => sum + item.price * item.quantity, 0),
+  );
+  const isInCart = (id: string) => items.some((item) => item.id === id);
+
+  return { items, isOpen, ...actions, isInCart, totalCount, totalPrice };
+}
+
+// ── Hydration + cross-tab sync component (mount once in providers) ──
+
+export function CartHydrator() {
+  const hydrate = useCartStore((s) => s.hydrate);
+
+  useEffect(() => {
+    hydrate();
+
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key !== CART_STORAGE_KEY) return;
+      useCartStore.setState({ items: readCartFromStorage() });
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, [hydrate]);
+
+  return null;
 }
