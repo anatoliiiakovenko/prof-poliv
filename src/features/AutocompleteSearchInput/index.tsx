@@ -159,7 +159,7 @@ const AutocompleteSearchInput: React.FC = () => {
       options={options}
       onChange={handleChange}
       onSelect={handleSelect}
-      popupClassName="global-search-dropdown"
+      classNames={{ popup: { root: "global-search-dropdown" } }}
     >
       <Input.Search
         size="large"

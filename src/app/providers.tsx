@@ -2,7 +2,7 @@
 
 import { ConfigProvider, theme } from "antd";
 import React from "react";
-import { CartProvider } from "@/features/cart/CartContext";
+import { CartHydrator } from "@/features/cart/CartContext";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const isDark = false;
@@ -21,7 +21,8 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         },
       }}
     >
-      <CartProvider>{children}</CartProvider>
+      <CartHydrator />
+      {children}
     </ConfigProvider>
   );
 }
